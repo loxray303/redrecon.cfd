@@ -3,20 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RedRecon — Security Tools Portal</title>
+  <title>RedRecon — Advanced Security Portal</title>
   <meta name="description" content="RedRecon — Self-hosted security research and reconnaissance tools.">
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for Dynamic Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
   <style>
     :root {
-      --bg: #070708;
-      --surface: #0d0d10;
-      --card: #101014;
-      --border: #28191c;
-      --border-hover: #ff3347;
-      --text: #f5f5f5;
-      --muted: #918689;
-      --accent: #ff3347;
-      --accent-dark: #b51227;
-      --danger: #ff1f3d;
+      --bg: #050102; /* Extremely dark, slightly tinted red */
+      --surface: rgba(20, 5, 8, 0.4);
+      --glass-border: rgba(255, 31, 61, 0.15);
+      --glass-hover: rgba(255, 31, 61, 0.6);
+      --text: #ffffff;
+      --muted: #a39598;
+      --accent: #ff1f3d;
+      --accent-glow: rgba(255, 31, 61, 0.5);
+      --card-width: 380px;
     }
 
     *, *::before, *::after {
@@ -26,52 +34,62 @@
     }
 
     body {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(
-          circle at 50% -10%,
-          rgba(255, 35, 55, 0.16),
-          transparent 40%
-        ),
-        var(--bg);
-      background-attachment: fixed;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      line-height: 1.6;
+      /* Subtle vignette effect */
+      box-shadow: inset 0 0 150px rgba(0,0,0,0.9);
     }
 
-    /* Background Cyber Grid Pattern */
-    body::before {
-      content: "";
+    /* ----------------------------------
+       ANIME VIBE BACKGROUND (CANVAS)
+    ----------------------------------- */
+    #animeCanvas {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: linear-gradient(rgba(255, 51, 71, 0.025) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255, 51, 71, 0.025) 1px, transparent 1px);
-      background-size: 40px 40px;
+      width: 100vw;
+      height: 100vh;
+      z-index: -2;
       pointer-events: none;
-      z-index: -1;
     }
 
+    /* Center glowing aura */
+    .center-aura {
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80vw;
+      height: 80vw;
+      background: radial-gradient(circle, rgba(255, 31, 61, 0.08) 0%, transparent 60%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* ----------------------------------
+       HEADER
+    ----------------------------------- */
     header {
       width: 100%;
-      border-bottom: 1px solid var(--border);
-      background: rgba(7, 7, 8, 0.8);
-      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--glass-border);
+      background: rgba(5, 1, 2, 0.7);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       position: sticky;
       top: 0;
       z-index: 100;
     }
 
     .nav-container {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 1.25rem 2rem;
+      padding: 1.2rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -79,287 +97,312 @@
 
     .brand {
       font-weight: 800;
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       letter-spacing: -0.02em;
       text-decoration: none;
       color: var(--text);
       display: flex;
       align-items: center;
-      gap: 0.15rem;
+      gap: 0.2rem;
     }
 
     .brand span {
       color: var(--accent);
-      text-shadow: 0 0 12px rgba(255, 51, 71, 0.4);
+      text-shadow: 0 0 15px var(--accent-glow);
     }
 
     .nav-domain {
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
       color: var(--muted);
-      font-family: monospace;
-      letter-spacing: -0.01em;
-      background: var(--surface);
-      padding: 0.25rem 0.75rem;
-      border-radius: 4px;
-      border: 1px solid var(--border);
+      background: rgba(255, 31, 61, 0.05);
+      padding: 0.4rem 1rem;
+      border-radius: 6px;
+      border: 1px solid var(--glass-border);
     }
 
+    /* ----------------------------------
+       HERO SECTION
+    ----------------------------------- */
     main {
       flex: 1;
-      max-width: 1200px;
       width: 100%;
-      margin: 0 auto;
-      padding: 0 2rem 5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 0 3rem 0;
     }
 
     .hero {
       text-align: center;
-      padding: 5rem 0 3.5rem 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      padding: 0 2rem 3rem 2rem;
+      animation: animePopIn 1s cubic-bezier(0.2, 1, 0.3, 1);
+    }
+
+    @keyframes animePopIn {
+      0% { opacity: 0; transform: scale(0.9) translateY(20px); filter: blur(10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
     }
 
     .status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 1rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 9999px;
+      gap: 0.6rem;
+      padding: 0.4rem 1.2rem;
+      background: rgba(255, 31, 61, 0.05);
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.75rem;
-      font-weight: 600;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.15em;
       margin-bottom: 2rem;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      box-shadow: 0 0 20px rgba(255, 31, 61, 0.1);
     }
 
     .status-dot {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       background-color: var(--accent);
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--accent);
-      animation: pulse 2s infinite;
+      box-shadow: 0 0 12px var(--accent);
+      animation: heartbeat 1.5s infinite;
     }
 
-    @keyframes pulse {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.9); }
-      100% { opacity: 1; transform: scale(1); }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.6; box-shadow: 0 0 25px var(--accent); }
     }
 
     .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-size: clamp(3rem, 7vw, 5.5rem);
       font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      margin-bottom: 1.25rem;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
     }
 
-    .hero h1 .recon-text { color: var(--text); }
-    .hero h1 .research-text { color: var(--accent); text-shadow: 0 0 25px rgba(255, 51, 71, 0.3); }
-    .hero h1 .build-text { color: var(--text); }
+    .hero h1 .research-text { 
+      color: var(--accent); 
+      text-shadow: 0 0 30px var(--accent-glow), 0 0 60px rgba(255, 31, 61, 0.3);
+      font-style: italic; /* Anime speedline vibe */
+    }
 
     .hero p {
       color: var(--muted);
-      font-size: clamp(1rem, 2vw, 1.1rem);
-      max-width: 560px;
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      max-width: 580px;
       margin: 0 auto;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
-    .tools-section-header {
+    /* ----------------------------------
+       SLIDER / MARQUEE (Right to Left)
+    ----------------------------------- */
+    .slider-section {
+      width: 100%;
+      padding: 2rem 0;
+      position: relative;
       display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 1rem;
-      margin-bottom: 2rem;
+      overflow: hidden;
     }
 
-    .tools-section-title {
-      font-size: 1.125rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
+    /* Edge Fade Gradients for seamless look */
+    .slider-section::before,
+    .slider-section::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      width: 15vw;
+      height: 100%;
+      z-index: 5;
+      pointer-events: none;
+    }
+    .slider-section::before {
+      left: 0;
+      background: linear-gradient(to right, var(--bg), transparent);
+    }
+    .slider-section::after {
+      right: 0;
+      background: linear-gradient(to left, var(--bg), transparent);
     }
 
-    .tools-count {
-      font-size: 0.85rem;
-      color: var(--muted);
-      font-family: monospace;
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 2rem;
+      padding: 1rem 2rem;
+      /* Marquee Animation */
+      animation: scrollRightToLeft 25s linear infinite;
     }
 
-    /* Responsive Grid & 3D Card Setup */
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.75rem;
+    /* PAUSE ON HOVER */
+    .marquee-track:hover {
+      animation-play-state: paused;
     }
 
-    .tool-card-wrapper {
-      perspective: 1000px;
+    @keyframes scrollRightToLeft {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); } 
     }
 
+    /* ----------------------------------
+       GLASS MIRROR CARDS
+    ----------------------------------- */
     .tool-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.75rem;
+      width: var(--card-width);
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 2rem;
       text-decoration: none;
       color: inherit;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100%;
       position: relative;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease-out;
-      transform-style: preserve-3d;
-      overflow: hidden;
+      overflow: hidden; /* For the mirror sweep */
+      transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
     }
 
-    /* Ambient card hover glow */
-    .tool-card::after {
+    /* Mirror Light Sweep Effect */
+    .tool-card::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
+      top: 0; 
+      left: -150%;
+      width: 50%; 
       height: 100%;
-      background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(255, 35, 55, 0.06), transparent 40%);
+      background: linear-gradient(
+        to right, 
+        transparent, 
+        rgba(255, 255, 255, 0.15), 
+        transparent
+      );
+      transform: skewX(-25deg);
+      transition: all 0.6s ease;
+      z-index: 1;
       pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
     }
 
-    .tool-card:hover::after {
-      opacity: 1;
+    .tool-card:hover::before {
+      left: 150%;
     }
 
     .tool-card:hover {
-      border-color: var(--accent-dark);
-      box-shadow: 0 16px 40px -12px rgba(255, 35, 55, 0.2);
+      transform: translateY(-8px);
+      border-color: var(--glass-hover);
+      box-shadow: 0 15px 35px -5px rgba(255, 31, 61, 0.25), inset 0 0 20px rgba(255, 31, 61, 0.05);
+      background: rgba(30, 5, 10, 0.6);
     }
 
-    .tool-card-content {
-      display: flex;
-      flex-direction: column;
-      transform: translateZ(20px);
+    .tool-card > * {
+      position: relative;
+      z-index: 2;
     }
 
-    .tool-icon {
-      width: 46px;
-      height: 46px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+    .tool-icon-wrapper {
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 31, 61, 0.08);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
+      font-size: 1.3rem;
       color: var(--accent);
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-      font-family: monospace;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+      margin-bottom: 1.8rem;
+      transition: all 0.4s ease;
+    }
+
+    .tool-card:hover .tool-icon-wrapper {
+      background: var(--accent);
+      color: #fff;
+      transform: scale(1.1) rotate(-5deg);
+      box-shadow: 0 0 20px var(--accent-glow);
     }
 
     .tool-title {
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       font-weight: 700;
       letter-spacing: -0.01em;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.8rem;
     }
 
     .tool-description {
       color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
+      font-size: 0.95rem;
+      line-height: 1.6;
       margin-bottom: 2rem;
+      min-height: 4.8rem;
     }
 
     .tool-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(40, 25, 28, 0.6);
-      transform: translateZ(10px);
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--glass-border);
     }
 
     .tool-url {
-      font-family: monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.8rem;
-      color: var(--accent);
-      letter-spacing: -0.01em;
+      color: var(--muted);
+      transition: color 0.3s ease;
+    }
+
+    .tool-card:hover .tool-url {
+      color: #fff;
     }
 
     .tool-arrow {
       color: var(--muted);
-      transition: transform 0.25s ease, color 0.25s ease;
       font-size: 1.1rem;
+      transition: all 0.3s ease;
     }
 
     .tool-card:hover .tool-arrow {
-      transform: translateX(5px);
       color: var(--accent);
+      transform: translateX(10px);
     }
 
-    .empty-state {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 4rem 2rem;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
+    /* ----------------------------------
+       FOOTER
+    ----------------------------------- */
     footer {
-      max-width: 1200px;
+      max-width: 1400px;
       width: 100%;
       margin: 0 auto;
-      padding: 2.5rem 2rem;
-      border-top: 1px solid var(--border);
+      padding: 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 0.85rem;
       color: var(--muted);
+      border-top: 1px solid var(--glass-border);
+      background: rgba(5, 1, 2, 0.8);
     }
+    
+    .footer-right { font-family: 'JetBrains Mono', monospace; }
 
-    .footer-right {
-      font-family: monospace;
-    }
-
-    /* Responsive Breakpoints */
-    @media (max-width: 900px) {
-      .tools-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 600px) {
-      .tools-grid {
-        grid-template-columns: 1fr;
-      }
-      .nav-container, main, footer {
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
-      }
-      footer {
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
-      }
+    @media (max-width: 768px) {
+      .slider-section::before, .slider-section::after { width: 5vw; }
+      .tool-card { width: 300px; padding: 1.5rem; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Anime Vibe: Rising Embers/Sparks Canvas -->
+  <canvas id="animeCanvas"></canvas>
+  <div class="center-aura"></div>
 
   <header>
     <div class="nav-container">
@@ -372,54 +415,55 @@
     <section class="hero">
       <div class="status-badge">
         <span class="status-dot"></span>
-        SELF-HOSTED SECURITY TOOLS
+        Self-Hosted Security Tools
       </div>
       <h1>
-        <span class="recon-text">Recon.</span><br>
+        <span class="recon-text">Recon.</span>
         <span class="research-text">Research.</span><br>
         <span class="build-text">Build.</span>
       </h1>
       <p>
-        A collection of self-hosted tools built for security research, reconnaissance, learning, and authorized testing.
+        An exclusive collection of self-hosted tools crafted for advanced security research, reconnaissance, and authorized red team testing.
       </p>
     </section>
 
-    <section>
-      <div class="tools-section-header">
-        <h2 class="tools-section-title">Available Tools</h2>
-        <span class="tools-count" id="toolsCount">0 tools</span>
-      </div>
-      <div class="tools-grid" id="toolsGrid">
-        <!-- Dynamically generated tool cards will appear here -->
+    <!-- Infinite Scrolling Marquee Section -->
+    <section class="slider-section">
+      <div class="marquee-track" id="marqueeTrack">
+        <!-- Cards injected via JS -->
       </div>
     </section>
   </main>
 
   <footer>
-    <div>&copy; 2026 RedRecon</div>
-    <div class="footer-right">Built for security research &amp; authorized testing.</div>
+    <div>&copy; 2026 RedRecon. All rights reserved.</div>
+    <div class="footer-right">Engineered for Security Research</div>
   </footer>
 
   <script>
-    // নতুন কোনো টুল যোগ করতে চাইলে শুধু এই অ্যারেতে অবজেক্ট যুক্ত করুন।
+    // ==========================================
+    // 1. TOOL CONFIGURATION
+    // একদম আপনার অনুমতি ছাড়া বাইরের কোনো টুল নেই। 
+    // শুধু আপনার দেয়া ৩টি টুলই এখানে আছে।
+    // ==========================================
     const tools = [
       {
         name: "GTFOBins",
         url: "https://gtfobins.redrecon.cfd",
-        description: "Self-hosted Unix binary reference for security research.",
-        icon: "GB"
+        description: "Self-hosted Unix binary reference for security research and privilege escalation.",
+        icon: "fa-solid fa-terminal"
       },
       {
         name: "RevShell",
         url: "https://revshells.redrecon.cfd",
-        description: "Self-hosted reverse shell reference and authorized lab utility.",
-        icon: "RS"
+        description: "Advanced self-hosted reverse shell generator and authorized lab utility.",
+        icon: "fa-solid fa-network-wired"
       },
       {
         name: "Autofill Danger",
         url: "https://autofilldanger.redrecon.cfd",
-        description: "Self-hosted assessment utilities for browser autofill vectors.",
-        icon: "AD"
+        description: "Self-hosted assessment utilities for analyzing browser autofill vectors.",
+        icon: "fa-solid fa-shield-halved"
       }
     ];
 
@@ -441,75 +485,122 @@
       }
     }
 
-    function renderPortal() {
-      const grid = document.getElementById("toolsGrid");
-      const countEl = document.getElementById("toolsCount");
-      
-      const count = tools.length;
-      countEl.textContent = `${count} tool${count === 1 ? '' : 's'}`;
+    // HTML Generator for a single card
+    function createCardHTML(tool) {
+      const safeName = escapeHTML(tool.name);
+      const safeUrl = escapeHTML(tool.url);
+      const safeDesc = escapeHTML(tool.description);
+      const safeIcon = escapeHTML(tool.icon);
+      const displayUrl = escapeHTML(extractHostname(tool.url));
 
-      if (count === 0) {
-        grid.innerHTML = `<div class="empty-state">No tools configured at the moment.</div>`;
-        return;
+      return `
+        <a href="${safeUrl}" class="tool-card" target="_blank" rel="noopener noreferrer">
+          <div>
+            <div class="tool-icon-wrapper">
+              <i class="${safeIcon}"></i>
+            </div>
+            <h3 class="tool-title">${safeName}</h3>
+            <p class="tool-description">${safeDesc}</p>
+          </div>
+          <div class="tool-footer">
+            <span class="tool-url">${displayUrl}</span>
+            <span class="tool-arrow"><i class="fa-solid fa-arrow-right-long"></i></span>
+          </div>
+        </a>
+      `;
+    }
+
+    // Render Marquee Cards
+    function renderSlider() {
+      const track = document.getElementById("marqueeTrack");
+      if (tools.length === 0) return;
+
+      const singleSetHTML = tools.map(tool => createCardHTML(tool)).join("");
+      
+      // যেহেতু টুল মাত্র ৩টি, ইনফিনিট লুপ স্মুথ করতে এটিকে বেশ কয়েকবার ডুপ্লিকেট করতে হবে
+      // যাতে স্ক্রিনের ডানদিকে কখনো ফাঁকা জায়গা না আসে।
+      track.innerHTML = singleSetHTML.repeat(6);
+    }
+
+    // ==========================================
+    // 2. ANIME VIBE CANVAS ANIMATION (Embers/Sparks)
+    // ==========================================
+    function initAnimeBackground() {
+      const canvas = document.getElementById("animeCanvas");
+      const ctx = canvas.getContext("2d");
+      
+      let width, height;
+      let particles = [];
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resize);
+      resize();
+
+      // Particle System for Embers
+      class Ember {
+        constructor() {
+          this.reset();
+        }
+        reset() {
+          this.x = Math.random() * width;
+          this.y = height + Math.random() * 300; // Start below screen
+          this.size = Math.random() * 2.5 + 0.5; // Spark size
+          this.speedY = -(Math.random() * 1.5 + 0.5); // Move up
+          this.speedX = (Math.random() - 0.5) * 1; // Drift left/right
+          this.opacity = Math.random() * 0.5 + 0.2;
+          this.life = Math.random() * 0.02 + 0.005; // Fade out speed
+        }
+        update() {
+          this.y += this.speedY;
+          this.x += this.speedX;
+          
+          // Flicker effect
+          if (Math.random() > 0.95) {
+            this.speedX += (Math.random() - 0.5) * 0.5;
+          }
+
+          if (this.y < -10 || this.opacity <= 0) {
+            this.reset();
+            this.y = height + 10;
+          }
+        }
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 31, 61, ${this.opacity})`;
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = "#ff1f3d";
+          ctx.fill();
+          
+          // Reset shadow for performance
+          ctx.shadowBlur = 0; 
+        }
       }
 
-      grid.innerHTML = tools.map(tool => {
-        const safeName = escapeHTML(tool.name);
-        const safeUrl = escapeHTML(tool.url);
-        const safeDesc = escapeHTML(tool.description);
-        const safeIcon = escapeHTML(tool.icon);
-        const displayUrl = escapeHTML(extractHostname(tool.url));
+      // Create initial embers
+      for (let i = 0; i < 70; i++) {
+        particles.push(new Ember());
+      }
 
-        return `
-          <div class="tool-card-wrapper">
-            <a href="${safeUrl}" class="tool-card" target="_blank" rel="noopener noreferrer">
-              <div class="tool-card-content">
-                <div class="tool-icon">${safeIcon}</div>
-                <h3 class="tool-title">${safeName}</h3>
-                <p class="tool-description">${safeDesc}</p>
-              </div>
-              <div class="tool-footer">
-                <span class="tool-url">${displayUrl}</span>
-                <span class="tool-arrow">&rarr;</span>
-              </div>
-            </a>
-          </div>
-        `;
-      }).join("");
-
-      initCardInteractions();
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
     }
 
-    // হালকা 3D টিল্ট ও মাউস মুভমেন্ট এফেক্ট যুক্ত করার জন্য স্ক্রিপ্ট
-    function initCardInteractions() {
-      const cards = document.querySelectorAll('.tool-card');
-
-      cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-
-          // মাউস পজিশন গ্লো ইফেক্টের জন্য সেট করা
-          card.style.setProperty('--mouse-x', `${x}px`);
-          card.style.setProperty('--mouse-y', `${y}px`);
-
-          // 3D রোটেশন ক্যালকুলেশন
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const rotateX = ((y - centerY) / centerY) * -6;
-          const rotateY = ((x - centerX) / centerX) * 6;
-
-          card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
-        });
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", renderPortal);
+    // Initialize everything on load
+    document.addEventListener("DOMContentLoaded", () => {
+      renderSlider();
+      initAnimeBackground();
+    });
   </script>
 </body>
 </html>
